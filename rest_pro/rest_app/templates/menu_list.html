@@ -1,0 +1,13 @@
+<h2>Menu</h2>
+
+<ul>
+    {% for item in menus %}
+        <li>
+            <strong>{{ item.Name }}</strong><br>
+            {{ item.Description }}<br>
+            Price: Rs. {{ item.Price }}
+        </li>
+    {% empty %}
+        <li>No menu items available</li>
+    {% endfor %}
+</ul>
