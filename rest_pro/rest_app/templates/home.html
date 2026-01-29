@@ -156,9 +156,49 @@
             transform: translateX(-50%);
         }
         
+        /* Features Section */
+        .features {
+            background-color: #fff;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 30px;
+        }
+        
+        .feature-item {
+            text-align: center;
+            padding: 30px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            transition: transform 0.3s;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: #c62828;
+            margin-bottom: 20px;
+        }
+        
+        .feature-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .feature-item p {
+            color: #666;
+        }
+        
         /* Menu Highlights */
         .menu-highlights {
-            background-color: #fff;
+            background-color: #f8f9fa;
         }
         
         .menu-items {
@@ -168,7 +208,7 @@
         }
         
         .menu-item {
-            background-color: #f9f9f9;
+            background-color: #fff;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -223,6 +263,30 @@
             width: 100%;
             border-radius: 8px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .cta-section .section-title h2 {
+            color: white;
+        }
+        
+        .cta-section .section-title h2:after {
+            background-color: white;
+        }
+        
+        .cta-section p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 1.2rem;
+            opacity: 0.9;
         }
         
         /* Contact Section */
@@ -358,7 +422,8 @@
             <nav>
                 <ul id="navMenu">
                     <li><a href="#home">Home</a></li>
-                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#menu">Menu Highlights</a></li>
+                    <li><a href="/list">Full Menu</a></li>
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
                 </ul>
@@ -371,7 +436,40 @@
         <div class="container hero-content">
             <h1>Welcome to Bella Vista Restaurant</h1>
             <p>Experience culinary excellence with our carefully crafted menu featuring fresh, locally-sourced ingredients and innovative flavors that will delight your senses.</p>
-            <a href="#menu" class="btn">View Our Menu</a>
+            <a href="/list" class="btn">View Full Menu</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose Us</h2>
+                <p>What makes Bella Vista special</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Fresh Ingredients</h3>
+                    <p>We source our ingredients locally, ensuring the freshest and highest quality in every dish we serve.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Expert Chefs</h3>
+                    <p>Our talented chefs bring years of experience and creativity to craft unforgettable dining experiences.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-wine-glass-alt"></i>
+                    </div>
+                    <h3>Fine Dining</h3>
+                    <p>Enjoy an elegant atmosphere perfect for any occasion, from casual dinners to special celebrations.</p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -404,9 +502,12 @@
                     <div class="menu-item-content">
                         <h3>Lobster Ravioli</h3>
                         <p>Handmade ravioli filled with lobster, served in a creamy saffron sauce.</p>
-                        <div class="price">$22.99</div>
+                        <div class="div class="price">$22.99</div>
                     </div>
                 </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="/list" class="btn">View Complete Menu</a>
             </div>
         </div>
     </section>
@@ -428,6 +529,20 @@
                 <div class="about-image">
                     <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1374&q=80" alt="Restaurant Interior">
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Ready to Dine With Us?</h2>
+            </div>
+            <p>Experience the perfect blend of flavors, ambiance, and hospitality at Bella Vista. Book your table today or explore our full menu.</p>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <a href="#contact" class="btn">Book a Table</a>
+                <a href="/list" class="btn" style="background-color: #2e7d32;">View Full Menu</a>
             </div>
         </div>
     </section>
