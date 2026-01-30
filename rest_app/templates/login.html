@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="form-container" style="max-width: 400px;">
+    <h1 style="text-align: center; margin-bottom: 30px;">Login</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="id_username">Username</label>
+            <input type="text" name="username" id="id_username" class="form-control" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="id_password">Password</label>
+            <input type="password" name="password" id="id_password" class="form-control" required>
+        </div>
+        
+        {% if form.errors %}
+        <div class="alert alert-danger">
+            Invalid username or password.
+        </div>
+        {% endif %}
+        
+        <button type="submit" class="btn" style="width: 100%; margin-top: 20px;">
+            <i class="fas fa-sign-in-alt"></i> Login
+        </button>
+    </form>
+    
+    <div style="text-align: center; margin-top: 20px;">
+        <p>Demo credentials:</p>
+        <p><strong>Username:</strong> admin</p>
+        <p><strong>Password:</strong> admin</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ page_title|default:"Menu Form" }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-page-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    
+    .form-page-header h1 {
+        font-size: 2.5rem;
+        color: #333;
+        margin-bottom: 10px;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .form-page-header h1:after {
+        content: '';
+        position: absolute;
+        width: 80px;
+        height: 3px;
+        background-color: #c62828;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    
+    .form-page-header p {
+        color: #666;
+        font-size: 1.1rem;
+    }
+    
+    .form-help {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 5px;
+        margin-bottom: 25px;
+        border-left: 4px solid #c62828;
+    }
+    
+    .form-help p {
+        margin: 0;
+        font-size: 0.95rem;
+        color: #666;
+    }
+    
+    .image-preview {
+        margin-top: 15px;
+        text-align: center;
+    }
+    
+    .current-image {
+        max-width: 200px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+    
+    .remove-image {
+        display: inline-block;
+        margin-top: 10px;
+        color: #c62828;
+        cursor: pointer;
+        font-size: 0.9rem;
+    }
+    
+    .form-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+    }
+    
+    @media (max-width: 768px) {
+        .form-footer {
+            flex-direction: column;
+            gap: 15px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-page-header">
+    <h1>{{ page_title|default:"Menu Item Form" }}</h1>
+    <p>{{ submit_button|default:"Submit" }} your menu item details</p>
+</div>
+
+<div class="form-container">
+    {% if form.errors %}
+    <div class="form-help" style="border-left-color: #dc3545;">
+        <p><strong>Please correct the errors below:</strong></p>
+        <ul>
+            {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <li>{{ field|title }}: {{ error }}</li>
+                {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="id_name">Item Name *</label>
+            {{ form.name }}
+            {% if form.name.help_text %}
+            <small style="color: #666; display: block; margin-top: 5px;">{{ form.name.help_text }}</small>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_description">Description</label>
+            {{ form.description }}
+            {% if form.description.help_text %}
+            <small style="color: #666; display: block; margin-top: 5px;">{{ form.description.help_text }}</small>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_price">Price *</label>
+            {{ form.price }}
+            <small style="color: #666; display: block; margin-top: 5px;">Enter price in dollars (e.g., 12.99)</small>
+        </div>
+        
+        <div class="form-group">
+            <label for="id_category">Category *</label>
+            {{ form.category }}
+        </div>
+        
+        <div class="form-group">
+            <label for="id_image">Image</label>
+            {{ form.image }}
+            {% if form.instance.image %}
+            <div class="image-preview">
+                <p>Current Image:</p>
+                <img src="{{ form.instance.image.url }}" alt="Current image" class="current-image">
+                <div class="remove-image" onclick="document.getElementById('image-clear-id').checked = true; this.previousElementSibling.style.opacity = '0.5'">
+                    <i class="fas fa-trash"></i> Remove current image
+                </div>
+                <div style="display: none;">
+                    {{ form.image.clear_checkbox }}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+        <div class="form-group">
+            <label style="display: flex; align-items: center; gap: 10px;">
+                {{ form.is_available }}
+                <span>Available for ordering</span>
+            </label>
+        </div>
+        
+        <div class="form-footer">
+            <div>
+                <button type="submit" class="btn">
+                    <i class="fas fa-save"></i> {{ submit_button|default:"Save Item" }}
+                </button>
+                <a href="{% url 'menu_list' %}" class="btn btn-secondary">
+                    <i class="fas fa-times"></i> Cancel
+                </a>
+            </div>
+            
+            <div style="font-size: 0.9rem; color: #666;">
+                * Required fields
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Image preview for new uploads
+    document.getElementById('id_image').addEventListener('change', function(e) {
+        if (this.files && this.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Remove existing preview if any
+                const existingPreview = document.querySelector('.image-preview');
+                if (existingPreview) {
+                    existingPreview.innerHTML = `
+                        <p>New Image Preview:</p>
+                        <img src="${e.target.result}" alt="Preview" class="current-image" style="max-width: 200px;">
+                    `;
+                } else {
+                    // Create new preview
+                    const previewDiv = document.createElement('div');
+                    previewDiv.className = 'image-preview';
+                    previewDiv.innerHTML = `
+                        <p>New Image Preview:</p>
+                        <img src="${e.target.result}" alt="Preview" class="current-image" style="max-width: 200px;">
+                    `;
+                    document.getElementById('id_image').parentNode.appendChild(previewDiv);
+                }
+            }
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+</script>
+{% endblock %}
